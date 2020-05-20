@@ -5,6 +5,7 @@ import io.sentry.event.Breadcrumb.Level;
 import io.sentry.event.Breadcrumb.Type;
 import io.sentry.event.BreadcrumbBuilder;
 import io.sentry.event.Event;
+import io.sentry.event.EventBuilder;
 import io.sentry.event.UserBuilder;
 import io.sentry.event.helper.ShouldSendEventCallback;
 
@@ -39,6 +40,7 @@ public class Application {
         for (Item item : cart) {
             int currentInventory = tempInventory.get(item.getId());
             if (currentInventory <= 0) {
+            
                throw new RuntimeException("No inventory for " + item.getId());
             }
 
@@ -141,9 +143,40 @@ public class Application {
     	 
         throw new RuntimeException("Unhandled exception!");
     }
+    
+    @RequestMapping("/captureevent")
+    @ResponseBody
+    String captureEvent() {
+    	 // This sends an event to Sentry.
+        EventBuilder eventBuilder = new EventBuilder()
+                        .withMessage("This is a test")
+                        .withLevel(Event.Level.INFO)
+                        .withLogger(logger.getName());
+        
+        Map<String, Map<String, Object>> contexts = new  HashMap<String, Map<String, Object>>();
+        Map<String, Object> contextA = new  HashMap<String, Object>();
+        contextA.put("a1", "1");
+        contextA.put("a2", "2");
+        contextA.put("a3", "3");
+        contexts.put("Context A", contextA);
+        
+        Map<String, Object> contextB = new  HashMap<String, Object>();
+        contextB.put("b1", "1");
+        contextB.put("b2", "2");
+        contextB.put("b3", "3");
+        contexts.put("Context B", contextB);
+        
+        eventBuilder.withContexts(contexts);
+
+        // Note that the *unbuilt* EventBuilder instance is passed in so that
+        // EventBuilderHelpers are run to add extra information to your event.
+        Sentry.capture(eventBuilder);
+        
+        return "Event sent to Sentry";
+    }
 
     public static void main(String[] args) {
-    	initSentry();
+    	//initSentry();
         inventory.put("wrench", 0);
         inventory.put("nails", 0);
         inventory.put("hammer", 2);

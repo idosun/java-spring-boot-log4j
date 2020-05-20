@@ -18,4 +18,4 @@ associate_commits:
 
 run_jar:
 	mvn clean package && \
-	 java -agentpath:libsentry_agent.dylib -Dsentry.release=$(VERSION) -jar target/sentry-spring-boot-log4j2-example-0.0.1.jar
+	 java -agentpath:libsentry_agent.dylib -Dsentry.release=$(VERSION) -Dsentry.properties.file=sentry-production.properties -jar target/sentry-spring-boot-log4j2-example-0.0.1.jar

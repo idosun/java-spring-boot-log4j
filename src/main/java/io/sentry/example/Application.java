@@ -40,7 +40,7 @@ public class Application {
         for (Item item : cart) {
             int currentInventory = tempInventory.get(item.getId());
             if (currentInventory <= 0) {
-            	//Fix RT........
+            
                throw new RuntimeException("No inventory for " + item.getId());
             }
 

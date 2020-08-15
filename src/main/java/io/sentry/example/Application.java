@@ -1,6 +1,7 @@
 package io.sentry.example;
 
 import io.sentry.Sentry;
+import io.sentry.connection.EventSendCallback;
 import io.sentry.event.Breadcrumb.Level;
 import io.sentry.event.Breadcrumb.Type;
 import io.sentry.event.BreadcrumbBuilder;
@@ -35,6 +36,7 @@ public class Application {
     private static Map<String, Integer> inventory = new HashMap<>();
 
     private void checkout(List<Item> cart) {
+   
         Map<String, Integer> tempInventory = inventory;
 
         for (Item item : cart) {
@@ -194,7 +196,7 @@ public class Application {
         Sentry.getStoredClient().addShouldSendEventCallback(new ShouldSendEventCallback() {
 		    @Override
 		    public boolean shouldSend(Event event) {
-		    	 
+		    			    	 
 		        if (event.getMessage().contains("foo")) {
 		            return false;
 		        }		   
@@ -202,5 +204,6 @@ public class Application {
 		        return true;
 		    }
 		});
+        
     }
 }

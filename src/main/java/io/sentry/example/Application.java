@@ -43,7 +43,7 @@ public class Application {
             int currentInventory = tempInventory.get(item.getId());
             if (currentInventory <= 0) {
             	//Fix.....
-               throw new RuntimeException("No inventory for " + item.getId());
+               //throw new RuntimeException("No inventory for " + item.getId());
             }
 
             tempInventory.put(item.getId(), currentInventory-1);
@@ -199,7 +199,8 @@ public class Application {
 		    			    	 
 		        if (event.getMessage().contains("foo")) {
 		            return false;
-		        }		   
+		        }		
+		        
 		
 		        return true;
 		    }

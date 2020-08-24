@@ -42,8 +42,8 @@ public class Application {
         for (Item item : cart) {
             int currentInventory = tempInventory.get(item.getId());
             if (currentInventory <= 0) {
-            	//Fix.....
-               //throw new RuntimeException("No inventory for " + item.getId());
+            
+               throw new RuntimeException("No inventory for " + item.getId());
             }
 
             tempInventory.put(item.getId(), currentInventory-1);

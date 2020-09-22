@@ -112,6 +112,7 @@ public class Application {
     String handledError() {
     	
     	ThreadContext.put("page", "handled");
+        //Sentry.getStoredClient().addTag("transaction_id", "lkdfjs4001");
     	
         String someLocalVariable = "stack locals";
         
@@ -141,7 +142,8 @@ public class Application {
     @ResponseBody
     String unhandledError() {
     	ThreadContext.put("page", "unhandled");
-    	 String someLocalVariable = "stack locals";
+    	 String someLocalVariable = "stack locals";  
+         //Sentry.getStoredClient().addTag("transaction_id", "lkdfjs4000");
     	 
         throw new RuntimeException("Unhandled exception!");
     }
